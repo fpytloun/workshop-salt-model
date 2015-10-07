@@ -162,18 +162,21 @@ parameters:
                 secret: |
                   "guth9kee1fe9hoo\g6oowei6er9aigohK=ieM4uvojaicha4a"
                 url: "http://owncloud.lxc.eru"
+                trusted_domains:
+                  - owncloud.lxc.eru
+                mail:
+                  domain: lxc.eru
                 database:
                   password: eikaithiuka2iex1ChieYaGeiguqu0iw
                 cache:
                   enabled: true
                   servers:
                     - address: localhost
+                admin:
+                  username: admin
+                  password: cloudlab
             mysql:
               server:
-                trusted_domains:
-                  - owncloud.lxc.eru
-                mail:
-                  domain: lxc.eru
                 ssl:
                   enabled: false
                 database:
