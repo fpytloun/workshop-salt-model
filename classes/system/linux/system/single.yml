@@ -14,6 +14,3 @@ parameters:
           architectures: amd64
           default: true
           key_url: "http://apt.tcpcloud.eu/public.gpg"
-          pin:
-            - priority: 900
-              pin: 'origin "apt.tcpcloud.eu"'

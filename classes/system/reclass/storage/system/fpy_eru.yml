@@ -179,7 +179,7 @@ parameters:
                     users:
                     - name: owncloud
                       password: eikaithiuka2iex1ChieYaGeiguqu0iw
-                      host: 127.0.0.1
+                      host: localhost
                       rights: all privileges
             apache:
               server:
