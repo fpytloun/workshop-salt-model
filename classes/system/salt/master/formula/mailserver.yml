@@ -1,0 +1,21 @@
+parameters:
+  salt:
+    master:
+      environment:
+        prd:
+          formula:
+            postfix:
+              source: pkg
+              name: salt-formula-postfix
+            dovecot:
+              source: pkg
+              name: salt-formula-dovecot
+            glusterfs:
+              source: pkg
+              name: salt-formula-glusterfs
+            roundcube:
+              source: pkg
+              name: salt-formula-roundcube
+            mysql:
+              source: pkg
+              name: salt-formula-mysql
