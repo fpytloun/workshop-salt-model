@@ -1,0 +1,140 @@
+parameters:
+  reclass:
+    storage:
+      node:
+        fpy_int_eru_mail01:
+          name: mail01
+          domain: lxc.eru
+          classes:
+            - system.linux.system.kvm
+            - service.mysql.server.replication_both
+            - system.postfix.common.fpy_int_eru
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            mysql_replication_master: mail02.lxc.eru
+            mysql_replication_master_address: mail02.lxc.eru
+            mysql_server_id: 1
+        fpy_int_eru_mail02:
+          name: mail02
+          domain: lxc.eru
+          classes:
+            - system.linux.system.kvm
+            - service.mysql.server.replication_both
+            - system.postfix.common.fpy_int_eru
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            mysql_replication_master: mail01.lxc.eru
+            mysql_replication_master_address: mail01.lxc.eru
+            mysql_server_id: 2
+        fpy_int_eru_relay01:
+          name: relay01
+          domain: lxc.eru
+          classes:
+            - system.linux.system.kvm
+            - service.postfix.relay
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+          parameters:
+            postfix:
+              relay:
+                host: mail01.lxc.eru
+                domain: lxc.eru
+                sasl:
+                  user: test
+                  password: changeme
+        fpy_int_eru_horizon01:
+          name: horizon01
+          domain: lxc.eru
+          classes:
+            - system.linux.system.kvm
+            - service.memcached.server.local
+            - service.horizon.server.single
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+            single_address: 127.0.0.1
+          parameters:
+            horizon:
+              server:
+                version: kilo
+                secret_key: faj2511čfadfajslkfjeiuěfasfa
+                theme: tcp
+                plugins:
+                  - helpdesk
+                bind:
+                  address: 0.0.0.0
+                cache:
+                  engine: 'memcached'
+                identity:
+                  engine: keystone
+                  host: 127.0.0.1
+                  encryption: none
+                  port: 5000
+                  api_version: 3
+                mail:
+                  engine: console
+        fpy_int_eru_gluster01:
+          name: gluster01
+          domain: lxc.eru
+          classes:
+            - system.linux.system.kvm
+            - service.glusterfs.server
+            - service.glusterfs.client
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+          parameters:
+            glusterfs:
+              server:
+                peers:
+                - 172.20.0.106
+                - 172.20.0.107
+                volumes:
+                  glance:
+                    storage: /srv/glusterfs/test
+                    replica: 2
+                    bricks:
+                      - 172.20.0.106:/srv/glusterfs/test
+                      - 172.20.0.107:/srv/glusterfs/test
+                    options:
+                      cluster.readdir-optimize: On
+                      nfs.disable: On
+                      network.remote-dio: On
+                      diagnostics.client-log-level: WARNING
+                      diagnostics.brick-log-level: WARNING
+              client:
+                volumes:
+                  glance:
+                    path: /mnt/test
+                    server: 172.20.0.106
+        fpy_int_eru_gluster02:
+          name: gluster02
+          domain: lxc.eru
+          classes:
+            - system.linux.system.kvm
+            - service.glusterfs.server
+            - service.glusterfs.client
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+          parameters:
+            glusterfs:
+              server:
+                peers:
+                - 172.20.0.106
+                - 172.20.0.107
+                volumes:
+                  glance:
+                    storage: /srv/glusterfs/test
+                    replica: 2
+                    bricks:
+                      - 172.20.0.106:/srv/glusterfs/test
+                      - 172.20.0.107:/srv/glusterfs/test
+                    options:
+                      cluster.readdir-optimize: On
+                      nfs.disable: On
+                      network.remote-dio: On
+                      diagnostics.client-log-level: WARNING
+                      diagnostics.brick-log-level: WARNING
+              client:
+                volumes:
+                  glance:
+                    path: /mnt/test
+                    server: 172.20.0.106
