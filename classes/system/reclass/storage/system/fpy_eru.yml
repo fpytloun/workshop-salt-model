@@ -170,6 +170,10 @@ parameters:
                     - address: localhost
             mysql:
               server:
+                trusted_domains:
+                  - owncloud.lxc.eru
+                mail:
+                  domain: lxc.eru
                 ssl:
                   enabled: false
                 database:
