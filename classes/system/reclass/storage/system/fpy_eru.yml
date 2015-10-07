@@ -175,6 +175,12 @@ parameters:
                 admin:
                   username: admin
                   password: cloudlab
+                users:
+                  filip:
+                    enabled: true
+                    group: Users
+                    password: cloudlab
+                    name: Filip Pytloun
                 appstore:
                   experimental: true
             mysql:
