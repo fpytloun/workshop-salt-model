@@ -175,6 +175,8 @@ parameters:
                 admin:
                   username: admin
                   password: cloudlab
+                appstore:
+                  experimental: true
             mysql:
               server:
                 ssl:
