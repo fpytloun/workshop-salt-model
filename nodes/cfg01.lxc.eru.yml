@@ -9,6 +9,8 @@ classes:
 - system.salt.master.formula.openstack_core
 - system.salt.master.formula.saltstack
 - system.salt.master.formula.sensu
+- system.salt.master.formula.aptly
+- system.salt.master.formula.mailserver
 - system.reclass.storage.salt
 - system.reclass.storage.system.fpy_eru
 parameters:
