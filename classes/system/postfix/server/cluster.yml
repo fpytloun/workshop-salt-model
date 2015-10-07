@@ -1,0 +1,103 @@
+classes:
+- service.postfix.server
+- service.dovecot.server
+- service.roundcube.server
+- service.apache.server.single
+parameters:
+  postfix:
+    server:
+      origin: ${_param:postfix_origin}
+      mailman:
+        enabled: true
+        admin_password: SaiS0kai
+        lists:
+          - name: support
+            admin: test@lxc.eru
+            password: test
+            domain: lxc.eru
+            domainweb: lists.lxc.eru
+            members:
+              - test@lxc.eru
+            parameters:
+              real_name: support
+              description: "Support mailing list"
+              # Don't be advertised
+              advertised: 0
+              # Require admin to confirm subscription
+              subscribe_policy: 2
+              # Show members only to admins
+              private_roster: 2
+              # Archive only for members
+              archive_private: 1
+      dkim:
+        enabled: true
+        domains:
+          - name: ${_param:postfix_origin}
+            selector: mail
+            key: |
+              -----BEGIN RSA PRIVATE KEY-----
+              MIICXQIBAAKBgQDIkAYQpv4zEUEJAJylrBnQ2fvp6J5uMHZZTZp7mVKo2/6NOdHK
+              fibjSupHQXYa+nDVLOFbuj/ZEGzFinjNwxXBzIpJuWZsvRVP9FlgfrFYLhl/8zhU
+              cR/yEqGbGEvVMcOjrUdQqO+QMBYi0EOxKpD6Cpa1M5wf2EaH/yW9Sz7UEwIDAQAB
+              AoGBAIhdHDKQR/9SuOQ1DUy7YeYVf+k+5xFGVAFN+T4WNhRnV4CQEmraMPiTRAzk
+              njejlbnrROJIFQcx2rLI/m/wN0aSqA1m61Fn9im6glNvxQv3wysoxdDhgp2PxukD
+              2bN9zMP9gDMT7vYpg1YuymRYesV3AtYRw3BQ2EkA04J8SD6xAkEA+I1nzupDMQA1
+              PlgTPbrn/Vrts4s3LUqWGxBr9Ec3u4nRLZRQAplaSoWej5lOo8CvpWllmgMxaSAU
+              2O4hp0eOSQJBAM6Sf5lBXrBJDdxgfQk1YlKWq99kiBPkiCmd1Jv9ofmDdaetzjkz
+              bD/QGDsT87VWaBxQkw/0+Anb6CTLktcNv3sCQGwaVIQSL5coV//9nqDCohP3cFse
+              uajhP9gVlF5yezL+BhSk5Qe8WyD+bLBYJXPjYoG3DZGmwd7PLUIMkGaJIMECQQCW
+              Jf4BU3aUBEXC7Y905gy1ozcChXwzmWUver1TNSRKzLb0Tm0bPrlsGMHED1iRcmDy
+              U87RRmoUIHe4ZxAwqJmJAkBlVkcv61fsHaTHpTiZBongOBFBsOHUZ95c1/RUg6+3
+              DaagMAm19Qnll0Z+qLFYzAw+47SBXw4BMVcQOg6qz1/H
+              -----END RSA PRIVATE KEY-----
+  roundcube:
+    force_https: false
+    mail:
+      host: ${_param:postfix_origin}
+  mysql:
+    server:
+      ssl:
+        enabled: false
+      database:
+        mailserver:
+          encoding: UTF8
+          locale: cs_CZ
+          users:
+          - name: mailserver
+            password: ${_param:mysql_mailserver_password}
+            host: 127.0.0.1
+            rights: all privileges
+        roundcube:
+          encoding: UTF8
+          locale: cs_CZ
+          users:
+          - name: roundcube
+            password: ${_param:mysql_roundcube_password}
+            host: 127.0.0.1
+            rights: all privileges
+  apache:
+    server:
+      modules:
+        - cgi
+      site:
+        roundcube:
+          enabled: true
+          type: static
+          name: roundcube
+          root: /usr/share/roundcube
+          locations:
+            - uri: /admin
+              path: /usr/share/postfixadmin
+            - uri: /mailman
+              path: /usr/lib/cgi-bin/mailman
+              script: true
+            - uri: /pipermail
+              path: /var/lib/mailman/archives/public
+            - uri: /images/mailman
+              path: /usr/share/images/mailman
+          host:
+            name: ${_param:postfix_origin}
+            aliases:
+              - ${linux:system:name}.${linux:system:domain}
+              - ${linux:system:name}
+              - lists.${_param:postfix_origin}

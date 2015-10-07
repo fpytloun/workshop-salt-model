@@ -1,0 +1,46 @@
+classes:
+- service.glusterfs.server
+- service.glusterfs.client
+parameters:
+  glusterfs:
+    server:
+      peers:
+      - ${_param:cluster_node01_address}
+      - ${_param:cluster_node02_address}
+      volumes:
+        mail:
+          storage: /srv/glusterfs/mail
+          replica: 2
+          bricks:
+            - ${_param:cluster_node01_address}:/srv/glusterfs/mail
+            - ${_param:cluster_node02_address}:/srv/glusterfs/mail
+          options:
+            cluster.readdir-optimize: On
+            nfs.disable: On
+            network.remote-dio: On
+            diagnostics.client-log-level: WARNING
+            diagnostics.brick-log-level: WARNING
+        mailman:
+          storage: /srv/glusterfs/mailman
+          replica: 2
+          bricks:
+            - ${_param:cluster_node01_address}:/srv/glusterfs/mailman
+            - ${_param:cluster_node02_address}:/srv/glusterfs/mailman
+          options:
+            cluster.readdir-optimize: On
+            nfs.disable: On
+            network.remote-dio: On
+            diagnostics.client-log-level: WARNING
+            diagnostics.brick-log-level: WARNING
+    client:
+      volumes:
+        mail:
+          path: /srv/mail
+          server: ${_param:cluster_node01_address}
+          user: vmail
+          group: vmail
+        mailman:
+          path: /var/lib/mailman
+          server: ${_param:cluster_node01_address}
+          user: root
+          group: root

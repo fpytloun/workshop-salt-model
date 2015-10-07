@@ -6,7 +6,7 @@ parameters:
           name: mail01
           domain: lxc.eru
           classes:
-            - system.linux.system.kvm
+            - system.linux.system.single
             - service.mysql.server.replication_both
             - system.postfix.common.fpy_int_eru
           params:
@@ -18,7 +18,7 @@ parameters:
           name: mail02
           domain: lxc.eru
           classes:
-            - system.linux.system.kvm
+            - system.linux.system.single
             - service.mysql.server.replication_both
             - system.postfix.common.fpy_int_eru
           params:
@@ -30,7 +30,7 @@ parameters:
           name: relay01
           domain: lxc.eru
           classes:
-            - system.linux.system.kvm
+            - system.linux.system.single
             - service.postfix.relay
           params:
             salt_master_host: ${_param:reclass_config_master}
@@ -46,7 +46,7 @@ parameters:
           name: horizon01
           domain: lxc.eru
           classes:
-            - system.linux.system.kvm
+            - system.linux.system.single
             - service.memcached.server.local
             - service.horizon.server.single
           params:
@@ -76,7 +76,7 @@ parameters:
           name: gluster01
           domain: lxc.eru
           classes:
-            - system.linux.system.kvm
+            - system.linux.system.single
             - service.glusterfs.server
             - service.glusterfs.client
           params:
@@ -109,7 +109,7 @@ parameters:
           name: gluster02
           domain: lxc.eru
           classes:
-            - system.linux.system.kvm
+            - system.linux.system.single
             - service.glusterfs.server
             - service.glusterfs.client
           params:
@@ -138,3 +138,11 @@ parameters:
                   glance:
                     path: /mnt/test
                     server: 172.20.0.106
+        fpy_int_eru_owncloud:
+          name: owncloud
+          domain: lxc.eru
+          classes:
+            - system.linux.system.single
+            - service.mysql.server.single
+          params:
+            salt_master_host: ${_param:reclass_config_master}

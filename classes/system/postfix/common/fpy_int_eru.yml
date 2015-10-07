@@ -1,0 +1,19 @@
+classes:
+  - system.postfix.storage.glusterfs
+  - system.postfix.server.cluster
+parameters:
+  _param:
+    postfix_origin: lxc.eru
+    cluster_node01_address: mail01.lxc.eru
+    cluster_node02_address: mail02.lxc.eru
+    mysql_replication_master: ${_param:cluster_node01_address}
+    mysql_replication_master_address: ${_param:mysql_replication_master}
+    mysql_admin_user: root
+    mysql_admin_password: guowohluduithao4ahs8wee7Bah1eewo
+    mysql_mailserver_password: Peixeilaephahmoosa2daihoh4yiaThe
+    mysql_roundcube_password: naf2lieS1shae8iyiej1eag1AavahTi9
+    mysql_replication_user: slave_user
+    mysql_replication_password: hahrohkahbe5Poong3thaiL9ohX8ith7
+    mysql_ssl_authority: cloudlab.cz_service_CA
+    mysql_ssl_certificate: dns01.int.prd.tcp.cloudlab.cz
+    mysql_ssl_client_certificate: dns02.int.prd.tcp.cloudlab.cz
