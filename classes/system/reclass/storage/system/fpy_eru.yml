@@ -146,3 +146,19 @@ parameters:
             - service.mysql.server.single
           params:
             salt_master_host: ${_param:reclass_config_master}
+            mysql_admin_user: root
+            mysql_admin_password: cloudlab
+          parameters:
+            mysql:
+              server:
+                ssl:
+                  enabled: false
+                database:
+                  owncloud:
+                    encoding: UTF8
+                    locale: cs_CZ
+                    users:
+                    - name: owncloud
+                      password: eikaithiuka2iex1ChieYaGeiguqu0iw
+                      host: 127.0.0.1
+                      rights: all privileges
