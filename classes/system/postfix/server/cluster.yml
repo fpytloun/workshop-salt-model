@@ -4,9 +4,15 @@ classes:
 - service.roundcube.server
 - service.apache.server.single
 parameters:
+  dovecot:
+    server:
+      ssl:
+        enabled: false
   postfix:
     server:
       origin: ${_param:postfix_origin}
+      ssl:
+        enabled: false
       mailman:
         enabled: true
         admin_password: SaiS0kai
