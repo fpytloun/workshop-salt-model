@@ -8,6 +8,16 @@ parameters:
     server:
       ssl:
         enabled: false
+      nfs: true
+      service:
+        director:
+          enabled: true
+          backends:
+            - mail01.lxc.eru
+            - mail02.lxc.eru
+          directors:
+            - mail01.lxc.eru
+            - mail02.lxc.eru
   postfix:
     server:
       origin: ${_param:postfix_origin}
