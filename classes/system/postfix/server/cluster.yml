@@ -12,15 +12,22 @@ parameters:
       service:
         director:
           enabled: true
+          separate_instance: true
           backends:
             - mail01.lxc.eru
             - mail02.lxc.eru
           directors:
             - mail01.lxc.eru
             - mail02.lxc.eru
+        lmtp:
+          inet_enable: true
   postfix:
     server:
       origin: ${_param:postfix_origin}
+      dovecot_lmtp:
+        enabled: true
+        type: inet
+        address: "localhost:24"
       ssl:
         enabled: false
       mailman:
