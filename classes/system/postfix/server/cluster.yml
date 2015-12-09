@@ -12,7 +12,7 @@ parameters:
       service:
         director:
           enabled: true
-          separate_instance: true
+          separate_instance: false
           backends:
             - mail01.lxc.eru
             - mail02.lxc.eru
