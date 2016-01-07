@@ -215,5 +215,32 @@ parameters:
           #- system.collectd.client.carbon
           #- system.sensu.client.single
           - system.openssh.server.single
+          - system.freeipa.server.cluster
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+        fpy_int_eru_ipa01:
+          name: ipa01
+          domain: lxc.eru
+          classes:
+          - service.linux.system
+          - service.ntp.client
+          - service.salt.minion.master
+          #- system.collectd.client.carbon
+          #- system.sensu.client.single
+          - system.openssh.server.single
+          - system.freeipa.server.cluster
+          params:
+            salt_master_host: ${_param:reclass_config_master}
+        fpy_int_eru_ipa02:
+          name: ipa02
+          domain: lxc.eru
+          classes:
+          - service.linux.system
+          - service.ntp.client
+          - service.salt.minion.master
+          #- system.collectd.client.carbon
+          #- system.sensu.client.single
+          - system.openssh.server.single
+          - system.freeipa.server.cluster
           params:
             salt_master_host: ${_param:reclass_config_master}

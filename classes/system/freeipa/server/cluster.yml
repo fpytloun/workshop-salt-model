@@ -1,0 +1,11 @@
+classes:
+  - service.freeipa.server
+parameters:
+  freeipa:
+    server:
+      realm: LXC.ERU
+      domain: lxc.eru
+      admin:
+        password: cloudlab
+      ldap:
+        password: cloudlab
