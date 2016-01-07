@@ -209,6 +209,11 @@ parameters:
           name: freeipa
           domain: lxc.eru
           classes:
-            - system.linux.system.single
+          - service.linux.system
+          - service.ntp.client
+          - service.salt.minion.master
+          #- system.collectd.client.carbon
+          #- system.sensu.client.single
+          - system.openssh.server.single
           params:
             salt_master_host: ${_param:reclass_config_master}
