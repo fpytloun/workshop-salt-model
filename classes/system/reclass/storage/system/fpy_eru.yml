@@ -205,3 +205,10 @@ parameters:
                     name: owncloud
                     host:
                       name: owncloud.lxc.eru
+        fpy_int_eru_freeipa:
+          name: freeipa
+          domain: lxc.eru
+          classes:
+            - system.linux.system.single
+          params:
+            salt_master_host: ${_param:reclass_config_master}
